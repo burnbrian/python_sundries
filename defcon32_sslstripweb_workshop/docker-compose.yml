@@ -1,0 +1,18 @@
+services:
+  redis:
+    image: redis:buster
+
+  flask:
+    build:
+      context: ./flask/
+    links:
+      - redis
+
+  nginx:
+    restart: always
+    build: ./nginx/
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - flask
